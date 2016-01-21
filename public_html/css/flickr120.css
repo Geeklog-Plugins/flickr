@@ -1,0 +1,9 @@
+/**
+ * flickr plugin css
+ */
+.flickr-mini-gallery img, .flickr-photo {
+border:1px solid #DDDDDD;
+background-color: #FFFFFF;
+margin:3px 10px;
+padding:5px;
+}
