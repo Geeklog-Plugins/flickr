@@ -88,7 +88,7 @@ define ('FLICKR_API_KEY', $_FL_CONF['flickr_api_key']);
 
 function plugin_autotags_flickr ($op, $content = '', $autotag = '')
 {
-    global $_CONF, $_FL_CONF, $_TABLES, $LANG_FLICKR_1, $_DB_host, $_DB_name, $_DB_user, $_DB_pass;
+    global $_CONF, $_FL_CONF, $_TABLES, $LANG_FLICKR_1, $_DB_host, $_DB_name, $_DB_user, $_DB_pass, $_SCRIPTS;
 
     if ($op == 'tagname') {
 
@@ -103,6 +103,23 @@ function plugin_autotags_flickr ($op, $content = '', $autotag = '')
 	} else if ($op == 'parse') {
 
         require_once ($_CONF['path'] . 'plugins/flickr/include/phpFlickr.php');
+        
+        $_SCRIPTS->setJavaScriptLibrary('jquery');
+	
+        $css = '/flickr/css/flickr120.css';
+        $_SCRIPTS->setCSSFile('flickr.css', $css, true);
+        
+        $str = LB . '    var flickr_api_key = "'. $_FL_CONF['flickr_api_key'] .'";' . LB;
+        $str .= '    var flickr_mini_gallery_img_format = "' . $_FL_CONF['mini_gallery_format'] . '";' . LB;
+        /*
+        $str .= '    jQuery(document).ready(function(){' . LB;
+        $str .= '    initialize_flickr()	;' . LB;
+        $str .= '    });' . LB;
+        */
+        $_SCRIPTS->setJavaScript($str, true, true);
+            
+        $strext = '/flickr/js/miniflickr-0.4.js';
+        $_SCRIPTS->setJavaScriptFile('flickr.miniflickr', $strext, false);
 		
 		static $flickr;
 
@@ -602,23 +619,6 @@ function plugin_autouninstall_flickr()
 function plugin_getheadercode_flickr()
 {
     global $_CONF, $_FL_CONF, $_SCRIPTS;
-		
-	$_SCRIPTS->setJavaScriptLibrary('jquery');
-	
-	$css = '/flickr/css/flickr120.css';
-	$_SCRIPTS->setCSSFile('flickr.css', $css, true);
-	
-	$str = LB . '    var flickr_api_key = "'. $_FL_CONF['flickr_api_key'] .'";' . LB;
-    $str .= '    var flickr_mini_gallery_img_format = "' . $_FL_CONF['mini_gallery_format'] . '";' . LB;
-	/*
-	$str .= '    jQuery(document).ready(function(){' . LB;
-	$str .= '    initialize_flickr()	;' . LB;
-    $str .= '    });' . LB;
-*/
-	$_SCRIPTS->setJavaScript($str, true, true);
-		
-	$strext = '/flickr/js/miniflickr-0.4.js';
-	$_SCRIPTS->setJavaScriptFile('flickr.miniflickr', $strext, false);
 	
     return;
 }
