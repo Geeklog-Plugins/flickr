@@ -616,11 +616,4 @@ function plugin_autouninstall_flickr()
     return $out;
 }
 
-function plugin_getheadercode_flickr()
-{
-    global $_CONF, $_FL_CONF, $_SCRIPTS;
-	
-    return;
-}
-
 ?>
